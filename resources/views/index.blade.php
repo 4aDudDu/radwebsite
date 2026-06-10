@@ -9,7 +9,7 @@
         <div class="main-content">
             <!-- Section 1: Latest News (8 cards) -->
             <div class="section-header">
-                <h2>Terbaruaa</h2>
+                <h2>Terbaru</h2>
                 <div class="divider"></div>
             </div>
 
