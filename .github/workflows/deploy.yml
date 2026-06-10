@@ -1,46 +1,46 @@
-name: Deploy Laravel to cPanel FTP by Adryan
+# name: Deploy Laravel to cPanel FTP by Adryan
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout source code
+#         uses: actions/checkout@v4
 
-      - name: Deploy Laravel project to repositories/radwebsite
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: ./
-          server-dir: /repositories/radwebsite/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            .env
-            storage/logs/**
-            bootstrap/cache/**
+#       - name: Deploy Laravel project to repositories/radwebsite
+#         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+#         with:
+#           server: ${{ secrets.FTP_SERVER }}
+#           username: ${{ secrets.FTP_USERNAME }}
+#           password: ${{ secrets.FTP_PASSWORD }}
+#           protocol: ftp
+#           port: 21
+#           local-dir: ./
+#           server-dir: /repositories/radwebsite/
+#           exclude: |
+#             **/.git*
+#             **/.git*/**
+#             **/node_modules/**
+#             .env
+#             storage/logs/**
+#             bootstrap/cache/**
 
-      - name: Deploy Laravel public folder to public_html
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: ./public/
-          server-dir: /public_html/
-          exclude: |
-            **/.git*
-            **/.git*/**
+#       - name: Deploy Laravel public folder to public_html
+#         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+#         with:
+#           server: ${{ secrets.FTP_SERVER }}
+#           username: ${{ secrets.FTP_USERNAME }}
+#           password: ${{ secrets.FTP_PASSWORD }}
+#           protocol: ftp
+#           port: 21
+#           local-dir: ./public/
+#           server-dir: /public_html/
+#           exclude: |
+#             **/.git*
+#             **/.git*/**
