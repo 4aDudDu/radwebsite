@@ -1,4 +1,4 @@
-name: Deploy Laravel to cPanel FTP
+name: Deploy Laravel to cPanel FTP by Adryan
 
 on:
   push:
