@@ -15,3 +15,13 @@ Route::post('/chat', [\App\Http\Controllers\ChatbotController::class, 'chat'])->
 Route::view('/redaksi', 'pages.redaksi')->name('pages.redaksi');
 Route::view('/pedoman-media-siber', 'pages.pedoman')->name('pages.pedoman');
 Route::view('/kebijakan-privasi', 'pages.privasi')->name('pages.privasi');
+
+// Route khusus untuk membuat storage link di cPanel tanpa SSH
+Route::get('/create-storage-link', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        return 'Storage link berhasil dibuat! Silakan cek kembali website Anda.';
+    } catch (\Exception $e) {
+        return 'Terjadi kesalahan: ' . $e->getMessage();
+    }
+});
