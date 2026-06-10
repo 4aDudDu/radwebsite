@@ -45,74 +45,47 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()
+                Section::make('Konten Berita')
                     ->schema([
-                        Section::make('Main Content')
-                            ->schema([
-                                TextInput::make('title')
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                                TextInput::make('slug')
-                                    ->required()
-                                    ->unique(ignoreRecord: true)
-                                    ->maxLength(255),
-                                RichEditor::make('content')
-                                    ->required()
-                                    ->columnSpanFull(),
-                                SpatieMediaLibraryFileUpload::make('thumbnail')
-                                    ->collection('thumbnail')
-                                    ->image(),
-                            ])->columns(2),
-                        Section::make('SEO Meta Data')
-                            ->schema([
-                                TextInput::make('meta_title')
-                                    ->maxLength(255),
-                                Textarea::make('meta_description')
-                                    ->columnSpanFull(),
-                                TextInput::make('keywords')
-                                    ->maxLength(255),
-                            ])->columns(2),
+                        TextInput::make('title')
+                            ->required()
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                        TextInput::make('slug')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255),
+                        RichEditor::make('content')
+                            ->required()
+                            ->columnSpanFull(),
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
+                Section::make('Data Berita')
                     ->schema([
-                        Section::make('Status & Meta')
-                            ->schema([
-                                Select::make('status')
-                                    ->options([
-                                        'draft' => 'Draft',
-                                        'review' => 'Review',
-                                        'published' => 'Published',
-                                    ])
-                                    ->default('draft')
-                                    ->required()
-                                    ->native(false),
-                                DateTimePicker::make('published_at')
-                                    ->label('Published Date'),
-                                Select::make('author_id')
-                                    ->relationship('author', 'name')
-                                    ->required()
-                                    ->searchable(),
-                                Select::make('category_id')
-                                    ->relationship('category', 'name')
-                                    ->required()
-                                    ->searchable(),
-                                Select::make('tags')
-                                    ->relationship('tags', 'name')
-                                    ->multiple()
-                                    ->searchable()
-                                    ->preload(),
-                            ]),
-                        Section::make('Settings')
-                            ->schema([
-                                Toggle::make('is_breaking_news')
-                                    ->label('Breaking News'),
-                                Toggle::make('is_headline')
-                                    ->label('Headline'),
-                            ]),
+                        SpatieMediaLibraryFileUpload::make('thumbnail')
+                            ->collection('thumbnail')
+                            ->image()
+                            ->required(),
+                        Select::make('category_id')
+                            ->relationship('category', 'name')
+                            ->required()
+                            ->searchable(),
+                        DateTimePicker::make('published_at')
+                            ->label('Tanggal Publikasi')
+                            ->default(now())
+                            ->required(),
+                        Select::make('status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'published' => 'Published',
+                            ])
+                            ->default('published')
+                            ->required()
+                            ->native(false),
+                        Forms\Components\Hidden::make('author_id')
+                            ->default(fn () => auth()->id()),
                     ])
                     ->columnSpan(['lg' => 1]),
             ])
@@ -143,10 +116,6 @@ class PostResource extends Resource
                 TextColumn::make('author.name')
                     ->sortable()
                     ->searchable(),
-                ToggleColumn::make('is_breaking_news')
-                    ->label('Breaking'),
-                ToggleColumn::make('is_headline')
-                    ->label('Headline'),
                 TextColumn::make('views_count')
                     ->numeric()
                     ->sortable(),
@@ -160,28 +129,28 @@ class PostResource extends Resource
                 SelectFilter::make('status')
                     ->options([
                         'draft' => 'Draft',
-                        'review' => 'Review',
                         'published' => 'Published',
                     ]),
-                Filter::make('published_at')
-                    ->form([
-                        DatePicker::make('published_from'),
-                        DatePicker::make('published_until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['published_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['published_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '<=', $date),
-                            );
-                    })
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('headline')
+                    ->icon('heroicon-o-star')
+                    ->iconButton()
+                    ->color(fn (Post $record) => $record->is_headline ? 'warning' : 'gray')
+                    ->action(fn (Post $record) => $record->update(['is_headline' => !$record->is_headline]))
+                    ->tooltip('Set as Headline'),
+
+                Tables\Actions\Action::make('breaking')
+                    ->icon('heroicon-o-bolt')
+                    ->iconButton()
+                    ->color(fn (Post $record) => $record->is_breaking_news ? 'warning' : 'gray')
+                    ->action(fn (Post $record) => $record->update(['is_breaking_news' => !$record->is_breaking_news]))
+                    ->tooltip('Set as Breaking News'),
+
+                Tables\Actions\EditAction::make()
+                    ->iconButton(),
+                Tables\Actions\DeleteAction::make()
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
