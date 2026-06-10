@@ -1,4 +1,6 @@
 ---
 deployment:
   tasks:
-    - /bin/cp -R /home/riaq4793/repositories/radwebsite/public/* /home/riaq4793/public_html/
+    - export REPOPATH=/home/riaq4793/repositories/radwebsite
+    - export DEPLOYPATH=/home/riaq4793/public_html
+    - /bin/cp -R $REPOPATH/public/* $DEPLOYPATH
