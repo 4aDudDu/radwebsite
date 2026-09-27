@@ -71,7 +71,8 @@ class PostResource extends Resource
                         Select::make('category_id')
                             ->relationship('category', 'name')
                             ->required()
-                            ->searchable(),
+                            ->searchable()
+                            ->preload(),
                         DateTimePicker::make('published_at')
                             ->label('Tanggal Publikasi')
                             ->default(now())

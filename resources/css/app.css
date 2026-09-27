@@ -214,12 +214,12 @@ p, .text-body {
 .article-card {
   background-color: var(--white);
   border-radius: var(--radius-lg);
-  padding: var(--spacing-5);
+  padding: 0;
+  overflow: hidden;
   box-shadow: var(--shadow-l1);
   transition: var(--transition-smooth);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
   height: 100%;
   border: 1px solid var(--border-light);
 }
@@ -233,7 +233,9 @@ p, .text-body {
 .article-card img {
   width: 100%;
   height: auto;
-  border-radius: var(--radius-md);
+  border-radius: 0;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
   aspect-ratio: 16/9;
   object-fit: cover;
   transition: var(--transition-smooth);
@@ -246,16 +248,17 @@ p, .text-body {
 /* Image Container for overflow hidden */
 .img-container {
   overflow: hidden;
-  border-radius: var(--radius-md);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
 }
 
 .article-card-horizontal {
   display: flex;
   flex-direction: row;
-  gap: var(--spacing-5);
   background-color: var(--white);
   border-radius: var(--radius-lg);
-  padding: var(--spacing-5);
+  padding: 0;
+  overflow: hidden;
   box-shadow: var(--shadow-l1);
   transition: var(--transition-smooth);
   border: 1px solid var(--border-light);
@@ -268,8 +271,10 @@ p, .text-body {
 
 .article-card-horizontal .img-container {
   width: 220px;
-  height: 140px;
+  height: 100%;
+  min-height: 140px;
   flex-shrink: 0;
+  border-radius: 0;
 }
 
 .article-card-horizontal img {
@@ -289,6 +294,7 @@ p, .text-body {
   gap: var(--spacing-2);
   justify-content: center;
   flex: 1;
+  padding: var(--spacing-5);
 }
 
 @media (max-width: 767px) {
@@ -587,6 +593,35 @@ p, .text-body {
 .article-body h2 {
   margin-top: var(--spacing-8);
   margin-bottom: var(--spacing-4);
+}
+
+/* Headline Carousel */
+.headline-carousel {
+  position: relative; 
+  min-height: 400px; 
+  display: flex;
+}
+
+.headline-title {
+  font-size: 36px; 
+  line-height: 1.2; 
+  margin-bottom: 16px; 
+  color: var(--white);
+}
+
+@media (max-width: 767px) {
+  .headline-carousel {
+    min-height: 250px;
+  }
+  
+  .headline-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  
+  .overlay-card {
+    padding: var(--spacing-4) !important;
+  }
 }
 
 /* Footer */

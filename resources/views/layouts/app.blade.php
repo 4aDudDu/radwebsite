@@ -7,6 +7,20 @@
     <meta name="description" content="@yield('meta_description', 'Portal berita terpercaya dan terkini.')">
     <meta name="keywords" content="@yield('meta_keywords', 'berita, terkini, portal')">
 
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', config('app.name', 'Berita Modern'))">
+    <meta property="og:description" content="@yield('meta_description', 'Portal berita terpercaya dan terkini.')">
+    <meta property="og:image" content="@yield('og_image', asset('logo/logo.png'))">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="@yield('title', config('app.name', 'Berita Modern'))">
+    <meta name="twitter:description" content="@yield('meta_description', 'Portal berita terpercaya dan terkini.')">
+    <meta name="twitter:image" content="@yield('og_image', asset('logo/logo.png'))">
+
     <!-- Fonts: Poppins for Minimalist Polda Riau Design -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

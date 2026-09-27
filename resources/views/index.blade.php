@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        .article-card { padding: 0 !important; overflow: hidden; }
+        .article-card img { border-radius: 0 !important; border-top-left-radius: var(--radius-lg) !important; border-top-right-radius: var(--radius-lg) !important; }
+        .img-container { overflow: hidden; border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg); }
+        .article-card-horizontal { padding: 0 !important; overflow: hidden; }
+        .article-card-horizontal .img-container { height: 100%; min-height: 140px; border-radius: 0 !important; }
+        .article-card-content { padding: var(--spacing-5) !important; }
+    </style>
+
     <!-- Headline Section -->
     <x-headline-grid />
 

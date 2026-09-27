@@ -1,5 +1,5 @@
 @php
-    $breakingNews = \App\Models\Post::where('is_breaking_news', true)->published()->latest()->limit(5)->get();
+    $breakingNews = \App\Models\Post::published()->latest()->limit(5)->get();
 @endphp
 
 @if($breakingNews->count() > 0)
